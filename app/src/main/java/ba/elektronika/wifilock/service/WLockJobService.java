@@ -53,11 +53,11 @@ public class WLockJobService extends JobService {
         mDataSource = DataSource.getInstance(this);
 
         wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        if (wifi.isWifiEnabled() == false) {
+        if (!wifi.isWifiEnabled()) {
             try {
                 wifi.setWifiEnabled(true);
             }
-            catch (RuntimeException re) {
+            catch (RuntimeException ignored) {
             }
         }
 
@@ -87,7 +87,7 @@ public class WLockJobService extends JobService {
             // wifi changed state
             else if(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION.equals(intent.getAction())) {
                 mWLockJobServiceProcessor.sendSupplicantState((SupplicantState)intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE));
-                Log.i(TAG, "SUPPLICANT STATE: " + (SupplicantState)intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE));
+                Log.i(TAG, "SUPPLICANT STATE: " + intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE));
             }
         }
     }
@@ -134,7 +134,9 @@ public class WLockJobService extends JobService {
 
                     // bug fix https://stackoverflow.com/a/36060742
                     JobScheduler jobScheduler = (JobScheduler) ctx.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-                    jobScheduler.cancelAll();
+                    if (jobScheduler != null) {
+                        jobScheduler.cancelAll();
+                    }
                 }
             });
             mWLockJobProcessorThread = new Thread(mWLockJobServiceProcessor);
@@ -160,7 +162,7 @@ public class WLockJobService extends JobService {
                     //wlock = mDataSource.getLock(extra.getString(STARTUP_TASK_UNLOCK_BSSID));
 
                     // rucno punjenje, ne izclavimo iz baze
-                    wlock = new WLock("ba:75:d5:3d:a8:58", "WISPI.AP5a", "yourwifipass", "WPA-PSK/WPA2-PSK", "0000", 0, 0);
+                    wlock = new WLock("00:1c:df:e9:8d:d1", "Belkin_N_Wireless_E98DD1", "1234567890", "WPA-PSK/WPA2-PSK", "0000", 0, 0);
 
                     mWLockJobServiceProcessor.manualUnlock(wlock);
                 }
