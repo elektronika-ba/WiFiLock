@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="2dp"
+    android:paddingTop="2dp">
+
+    <!-- Connection Status BG -->
+
+    <View
+        android:id="@+id/wlock_connection_status"
+        android:layout_width="5dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="1dp"
+        android:background="#c62828" />
+
+    <!-- Module Title -->
+
+    <TextView
+        android:id="@+id/wlock_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_toRightOf="@id/wlock_connection_status"
+        android:layout_toLeftOf="@id/wlock_rssi"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="Wifi Lock Title"
+        android:textSize="20sp" />
+
+    <!-- SSID probably -->
+
+    <TextView
+        android:id="@+id/wlock_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/wlock_title"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_toRightOf="@id/wlock_connection_status"
+        android:layout_toLeftOf="@id/wlock_rssi"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:text="Wifi Lock Subtitle."
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/wlock_rssi"
+        android:layout_width="5dp"
+        android:layout_height="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="false"
+        android:layout_alignBottom="@id/wlock_subtitle"
+        android:layout_marginRight="1dp"
+        android:background="#1e88e5" />
+
+</RelativeLayout>

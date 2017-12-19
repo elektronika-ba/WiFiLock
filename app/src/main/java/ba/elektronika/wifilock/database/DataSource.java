@@ -75,15 +75,15 @@ public class DataSource {
      * @param BSSID
      * @return
      */
-    public WLock getLock(String BSSID) {
+    public WLock getWLock(String BSSID) {
         WLock wlock = null;
 
         open();
-        Cursor cursor = db.rawQuery("SELECT bssid, ssid, password, encryption_type, pincode, created_on, last_accessed_on FROM lock WHERE bssid = ?", new String[] { BSSID });
+        Cursor cursor = db.rawQuery("SELECT wlockid, bssid, ssid, password, encryption_type, pincode, created_on, last_accessed_on, title FROM wlock WHERE bssid = ?", new String[] { BSSID });
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            wlock = new WLock(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getLong(5), cursor.getLong(6));
+            wlock = new WLock(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getLong(6), cursor.getLong(7), cursor.getString(8));
         }
 
         cursor.close();
@@ -96,16 +96,16 @@ public class DataSource {
      * Get all Locks from the database.
      * @return ArrayList of WLock type
      */
-    public ArrayList<WLock> getAllLocks() {
+    public ArrayList<WLock> getAllWLocks() {
         ArrayList<WLock> lockList = new ArrayList<WLock>();
 
         open();
-        Cursor cursor = db.rawQuery("SELECT bssid, ssid, password, encryption_type, pincode, created_on, last_accessed_on FROM lock", null);
+        Cursor cursor = db.rawQuery("SELECT wlockid, bssid, ssid, password, encryption_type, pincode, created_on, last_accessed_on, title FROM wlock", null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                WLock wlock = new WLock(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getLong(5), cursor.getLong(6));
+                WLock wlock = new WLock(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getLong(6), cursor.getLong(7), cursor.getString(8));
                 lockList.add(wlock);
             }
             while (cursor.moveToNext());
@@ -117,22 +117,22 @@ public class DataSource {
         return lockList;
     }
 
-    public void updateLockLastActivity(String BSSID) {
+    public void updateWLockLastActivity(String BSSID) {
         if (BSSID.equals(""))
             return;
 
         open();
         ContentValues values = new ContentValues();
         values.put("last_accessed_on", System.currentTimeMillis());
-        db.update("lock", values, "bssid = ?", new String[] { BSSID });
+        db.update("wlock", values, "bssid = ?", new String[] { BSSID });
 
         close();
     }
 
-    public void deleteLock(String BSSID) {
+    public void deleteWLock(String BSSID) {
         open();
 
-        db.delete("lock", "bssid = ?", new String[] { BSSID });
+        db.delete("wlock", "bssid = ?", new String[] { BSSID });
 
         close();
     }

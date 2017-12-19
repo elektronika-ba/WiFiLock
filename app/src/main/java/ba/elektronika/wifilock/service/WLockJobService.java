@@ -47,8 +47,6 @@ public class WLockJobService extends JobService {
         super.onCreate();
         Log.i(TAG, "onCreate() " + this);
 
-        //android.os.Debug.waitForDebugger();
-
         // "open" the database
         mDataSource = DataSource.getInstance(this);
 
@@ -162,7 +160,7 @@ public class WLockJobService extends JobService {
                     //wlock = mDataSource.getLock(extra.getString(STARTUP_TASK_UNLOCK_BSSID));
 
                     // rucno punjenje, ne izclavimo iz baze
-                    wlock = new WLock("00:1c:df:e9:8d:d1", "Belkin_N_Wireless_E98DD1", "1234567890", "WPA-PSK/WPA2-PSK", "0000", 0, 0);
+                    wlock = new WLock(1, "00:1c:df:e9:8d:d1", "Belkin_N_Wireless_E98DD1", "1234567890", "WPA-PSK/WPA2-PSK", "0000", 0, 0, "Testna brava");
 
                     mWLockJobServiceProcessor.manualUnlock(wlock);
                 }

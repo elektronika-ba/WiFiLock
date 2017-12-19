@@ -5,6 +5,7 @@ package ba.elektronika.wifilock;
  */
 
 public class WLock {
+    private int wlockid;
     private String ssid;
     private String bssid;
     private String password;
@@ -12,8 +13,10 @@ public class WLock {
     private String pincode;
     private long created_on;
     private long last_accessed_on;
+    private String title;
 
-    public WLock(String bssid, String ssid, String password, String encryption_type, String pincode, long created_on, long last_accessed_on) {
+    public WLock(int wlockid, String bssid, String ssid, String password, String encryption_type, String pincode, long created_on, long last_accessed_on, String title) {
+        setWlockid(wlockid);
         setBSSID(bssid);
         setSSID(ssid);
         setPincode(pincode);
@@ -21,7 +24,10 @@ public class WLock {
         setCreatedOn(created_on);
         setLastAccessedOn(last_accessed_on);
         setEncryptionType(encryption_type);
+        setTitle(title);
     }
+
+    public void setWlockid(int wlockid) { this.wlockid = wlockid; }
 
     public void setBSSID(String bssid) {
         this.bssid = bssid;
@@ -69,4 +75,13 @@ public class WLock {
         return last_accessed_on;
     }
 
+    public int getWlockid() { return wlockid; }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
